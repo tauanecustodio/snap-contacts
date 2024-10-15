@@ -1,21 +1,106 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- css -->
-    <link rel="stylesheet" href="./assets/css/index.css">
+    <link rel="stylesheet" href="./assets/css/index.css" />
     <!-- font-awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <!-- font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
     <!-- favicon & title -->
-    <link rel="shortcut icon" href="./assets/images/logo.svg">
+    <link rel="shortcut icon" href="./assets/images/logo.svg" />
     <title>Snap Contacts</title>
-</head>
-<body>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <img
+          class="header__logo"
+          src="./assets/images/logo.svg"
+          alt="logo snap contacts"
+        />
+        <h1 class="header__title">SnapContacts</h1>
+      </header>
+
+      <main class="main">
+        <div class="main__actions">
+          <p class="main__btn main__icon-text">
+            <i class="fa-regular fa-address-book"></i>
+            Contatos
+          </p>
+          <button class="main__btn" id="add-btn" title="Adicionar contato">
+            <i class="fa-solid fa-user-plus"></i>
+          </button>
+        </div>
+    
+        <div class="container-table">
+          <table class="contacts-table">
+            <thead class="contacts-table__head">
+              <tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+              </tr>
+            </thead>
+
+            <tbody class="contacts-table__body" id="contacts-table-body">
+              <tr class="contacts-table__row">
+                <td>Tauane Custódio</td>
+                <td>+55 11 9999-8888</td>
+              </tr>
+              <tr class="contacts-table__row">
+                <td>João Silva</td>
+                <td>+55 11 7777-6666</td>
+              </tr>
+              <tr class="contacts-table__row">
+                <td>Maria Souza</td>
+                <td>+55 11 5555-4444</td>
+              </tr>
+              <tr class="contacts-table__row">
+                <td>Pedro Ferreira</td>
+                <td>+55 11 3333-2222</td>
+              </tr>
+            </tbody>
+
+            <tfoot class="contacts-table__foot">
+              <tr>
+                <td>Total</td>
+                <td>0 contatos</td>
+              </tr>
+            </tfoot>
+  
+          </table>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <p class="footer__copyright">
+          &copy; 2024 SnapContacts. Todos os direitos reservados.
+        </p>
+        <p class="footer__link">
+          Desenvolvido por
+          <a
+            href="https://github.com/tauanecustodio"
+            target="_blank"
+            title="Ir para o perfil do Github Tauane Custódio"
+            >Tauane Custódio
+          </a>
+        </p>
+      </footer>
+    </div>
+
     <script src="./assets/js/index.js"></script>
-</body>
+  </body>
 </html>
