@@ -13,6 +13,18 @@
     --secondary-color: #005151;
     --tertiary-color: #d9e6e6;
     --quaternary-color: #b0cccc;
+
+    --modal-background: #002828e4;
+    --light-background: #fcfdfd;
+
+    --border-input: #B2BBC6;
+
+    --button-primary-background: #005a5a;
+    --button-primary-text: #f8f8f8;
+    --button-secondary-background: #d9e6e6;
+    --button-secondary-text: #005a5a;
+    --button-secondary-border: #005a5a;
+
 }
 
 html, body {
@@ -154,4 +166,92 @@ body {
 
 .footer__link a {
     color: #029a9a;
+}
+
+/* -----------------------------modal----------------------------- */
+
+.modal__container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    background-color: var(--modal-background);
+}
+
+.modal__add-contacts {
+    background-color: var(--light-background);
+    padding: 1rem;
+    border-radius: 4px;
+    min-width: 330px;
+}
+
+#form__add-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.modal__input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 1.5px solid var(--border-input);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--neutral-black);
+    font-size: 0.9rem;
+}
+
+.modal__input:focus {
+    outline: none;
+    box-shadow: 0 0 0 1px var(--border-input);
+}
+
+.modal__buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.primary-btn, .secondary-btn {
+    font-size: 0.9rem;
+    color: var(--neutral-white);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.primary-btn:hover,
+.secondary-btn:hover {
+    opacity: 0.9;
+}
+
+.primary-btn:active,
+.secondary-btn:active {
+    transform: scale(0.97);
+}
+
+.primary-btn {
+    background-color: var(--button-primary-background);
+    color: var(--button-primary-text);
+    border: none;
+}
+
+.secondary-btn {
+    background: var(--button-secondary-background);
+    color: var(--button-secondary-text);
+    border: 2px solid var(--button-secondary-border);
+    font-weight: bold;
+}
+
+.modal__btn {
+    flex: 1;
+}
+
+.hide {
+    display: none;
 }
