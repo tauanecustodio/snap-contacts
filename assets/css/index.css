@@ -256,3 +256,9 @@ body {
 .hide {
     display: none;
 }
+
+.form__error {
+    color: red;
+    font-size: 0.8rem;
+    text-align: center;
+}
