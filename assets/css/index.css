@@ -141,6 +141,7 @@ body {
 }
 
 .contacts-table__body tr {
+    font-size: 0.94rem;
     cursor: default;
 }
 
@@ -152,12 +153,8 @@ body {
     background: var(--quaternary-color);
 }
 
-.contacts-table__foot tr td:first-of-type {
-    text-align: start;
-}
-
-.contacts-table__foot tr td:last-of-type {
-    text-align: end;
+.contacts-table__foot tr td {
+    text-align: center;
 }
 /* -----------------------------footer----------------------------- */
 
@@ -188,7 +185,7 @@ body {
     background-color: var(--light-background);
     padding: 1rem;
     border-radius: 4px;
-    min-width: 330px;
+    min-width: 360px;
 }
 
 #form-add-contacts {
