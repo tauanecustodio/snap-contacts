@@ -58,8 +58,9 @@ function validateForm(name, tel, email) {
 
 function updateTable() {
   tableBody.innerHTML= '';
+  let contactListSort = contactsList.sort((a, b) => a.name.localeCompare(b.name));
 
-  contactsList.forEach(contact => {
+  contactListSort.forEach(contact => {
     addContactToTable(contact.name, contact.tel, contact.email);
   });
 }
