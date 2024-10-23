@@ -1,5 +1,7 @@
 // --------- variables declaration ---------
 
+const contactsList = [];
+
 // main buttons
 const addContactBtn = document.getElementById('add-btn');
 
@@ -16,6 +18,7 @@ const inputEmail = document.getElementById('email-input');
 
 // table
 const tableBody = document.getElementById('contacts-table-body');
+const totalContacts = document.getElementById('total-contacts');
 
 // --------- function declarations ---------
 
@@ -42,6 +45,21 @@ function addContactToTable(name, tel, email) {
   tableBody.appendChild(row);
 }
 
+function updateContactsList(name, tel, email) {
+  const contact = {
+    name,
+    tel,
+    email,
+  };
+
+  contactsList.push(contact);
+  console.log(contactsList);
+}
+
+function updateTotalContacts() {
+  totalContacts.textContent = `${contactsList.length} contatos`;
+}
+
 
 // --------- event listeners ---------
 
@@ -63,5 +81,8 @@ formAddContacts.addEventListener('submit',  function(e) {
   const email = inputEmail.value;
   
   addContactToTable(name, tel, email);
+  updateContactsList(name, tel, email);
+  updateTotalContacts();
+
   modalToggle();
 })
