@@ -52,31 +52,18 @@
               <tr>
                 <th>Nome</th>
                 <th>Telefone</th>
+                <th>Email</th>
               </tr>
             </thead>
 
             <tbody class="contacts-table__body" id="contacts-table-body">
-              <tr class="contacts-table__row">
-                <td>Tauane Custódio</td>
-                <td>+55 11 9999-8888</td>
-              </tr>
-              <tr class="contacts-table__row">
-                <td>João Silva</td>
-                <td>+55 11 7777-6666</td>
-              </tr>
-              <tr class="contacts-table__row">
-                <td>Maria Souza</td>
-                <td>+55 11 5555-4444</td>
-              </tr>
-              <tr class="contacts-table__row">
-                <td>Pedro Ferreira</td>
-                <td>+55 11 3333-2222</td>
-              </tr>
+              
             </tbody>
 
             <tfoot class="contacts-table__foot">
               <tr>
                 <td>Total</td>
+                <td></td>
                 <td>0 contatos</td>
               </tr>
             </tfoot>
@@ -104,17 +91,18 @@
     <!-- modal -->
     <div class="modals">
 
-      <div class="modal__container" id="modal__add-contacts">
+      <div class="modal__container hide" id="modal__add-contacts">
         <div class="modal__add-contacts">
-          <form action="#" id="form__add-contacts">
-            <input type="text" class="modal__input" placeholder="Nome">
-            <input type="text" class="modal__input" placeholder="Telefone">
+          <form action="#" id="form-add-contacts">
+            <input type="text" class="modal__input" placeholder="Nome" id="name-input">
+            <input type="tel" class="modal__input" placeholder="Telefone" id="tel-input">
+            <input type="email" class="modal__input" placeholder="Email" id="email-input">
     
             <div class="modal__buttons">
-              <button class="modal__btn modal__cancel primary-btn">Cancelar</button>
-              <button class="modal__btn modal__add secondary-btn">Adicionar</button>
+              <button class="modal__btn modal__cancel primary-btn" >Cancelar</button>
+              <button class="modal__btn modal__add secondary-btn" type="submit">Adicionar</button>
+            </div>
           </form>
-          </div>
         </div>
       </div>
 
