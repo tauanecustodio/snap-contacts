@@ -1,6 +1,10 @@
 // --------- variables declaration ---------
 
-const contactsList = [];
+const contactsList = [
+  { name: "Polícia", tel: "190", email: "" },
+  { name: "Bombeiros", tel: "193", email: "" },
+  { name: "Ambulância", tel: "192", email: "" }
+];
 
 // main buttons
 const addContactBtn = document.getElementById('add-btn');
@@ -34,19 +38,33 @@ function validateForm(name, tel, email) {
 
   if(!name) {
     message = "Preencha o nome do contato";
+  } else if(contactsList.some(el => el.name == name)) {
+    message = "Já existe um contato com esse nome"
   } else if(!tel) {
     message = "Preencha o telefone do contato";
   } else if (tel && !telRegex.test(tel)) {
     message = "O telefone deve ter pelo menos 9 dígitos numéricos.";
+  } else if(contactsList.some(el => el.tel == tel)) {
+    message = "Já existe um contato com esse número"
   } else if (email && !emailRegex.test(email)) {
     message = "Formato de e-mail inválido.";
+  } else if(email !== '' && contactsList.some(el => el.email == email)) {
+    message = "Já existe um contato com esse email"
   } else {
     message = true;
   }
   return message
 }
 
-function addContactToTable(name, tel, email) {
+function updateTable() {
+  tableBody.innerHTML= '';
+
+  contactsList.forEach(contact => {
+    addContactToTable(contact.name, contact.tel, contact.email);
+  });
+}
+
+function addContactToTable(name, tel, email) {  
   const row = document.createElement('tr');
   
   const nameCell = document.createElement('td');
@@ -92,6 +110,9 @@ function clearForm() {
 
 // --------- event listeners ---------
 
+updateTable();
+updateTotalContacts();
+
 addContactBtn.addEventListener('click', (e) => {
   e.preventDefault();
   modalToggle();
@@ -116,8 +137,8 @@ formAddContacts.addEventListener('submit',  function(e) {
     return;
   }
   
-  addContactToTable(name, tel, email);
   updateContactsList(name, tel, email);
+  updateTable();
   updateTotalContacts();
 
   clearForm();
