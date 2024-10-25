@@ -44,6 +44,10 @@
           <button class="main__btn" id="add-btn" title="Adicionar contato">
             <i class="fa-solid fa-user-plus"></i>
           </button>
+          <button class="main__btn" title: pesquisar contatos>
+            <i class="fa-solid fa-search"></i>
+            <input type="text" class="main__search" id="search-input" placeholder="Pesquisar contatos...">
+          </button>
         </div>
     
         <div class="container-table">
@@ -63,10 +67,8 @@
 
             <tfoot class="contacts-table__foot">
               <tr>
-                <td>Total</td>
-                <td></td>
-                <td></td>
-                <td id="total-contacts">0 contatos</td>
+                <td colspan="2">Total</td>
+                <td id="total-contacts" colspan="2">0 contatos</td>
               </tr>
             </tfoot>
   

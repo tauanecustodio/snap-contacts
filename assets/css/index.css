@@ -107,6 +107,24 @@ body {
     flex: 1;
 }
 
+.main__search {
+    font-size: 0.95rem;
+    border: none;
+    border-bottom: 1px solid;
+    background: none;
+    color: var(--button-primary-text);
+    min-width: 300px;
+    width: 100%;
+}
+
+.main__search::placeholder {
+    color: var(--button-primary-text);
+}
+
+.main__search:focus {
+    outline: none;
+}
+
 .main__btn:hover {
     opacity: 0.9;
 }

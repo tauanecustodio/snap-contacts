@@ -1,4 +1,4 @@
-// --------- variables declaration ---------
+// --------- Variables Declaration ---------
 
 let contactIdDelete = null;
 let contactIdEdit = null;
@@ -9,31 +9,30 @@ let contactsList = [
   { id: 2, name: "Ambulância", tel: "192", email: "" }
 ];
 
-// main buttons
+// Main buttons and modal elements
 const addContactBtn = document.getElementById('add-btn');
-
-// modal
 const modalDeleteContacts = document.getElementById('modal-delete-contacts');
 const closeModalDeleteBtn = document.querySelector('.modal__cancel-delete');
 const deleteContactModalBtn = document.querySelector('.modal__delete');
-
 const modalAddContacts = document.getElementById('modal-add-contacts');
 const closeModalAddBtn = document.querySelector('.modal__cancel-add');
 const addContactModalBtn = document.querySelector('.modal__add');
 
-// form
+// Form elements
 const formAddContacts = document.getElementById('form-add-contacts');
 const errorMessage = document.getElementById('error-message');
 const [inputName, inputTel, inputEmail] = [
   'name-input', 'tel-input', 'email-input'
 ].map(id => document.getElementById(id));
 
-// table
+// Table and search input
 const tableBody = document.getElementById('contacts-table-body');
 const totalContacts = document.getElementById('total-contacts');
+const searchInput = document.getElementById('search-input');
 
-// --------- function declarations ---------
+// --------- Function Declarations ---------
 
+// Toggle modals
 function modalAddToggle() {
   modalAddContacts.classList.toggle('hide');
   addContactModalBtn.textContent = contactIdEdit === null ? 'Adicionar' : 'Editar';
@@ -43,6 +42,7 @@ function modalDeleteToggle() {
   modalDeleteContacts.classList.toggle('hide');
 }
 
+// Validate contact form inputs
 function validateForm(name, tel, email) {
   let message;
   const telRegex = /^[0-9]+$/;
@@ -68,113 +68,96 @@ function validateForm(name, tel, email) {
   return message;
 }
 
+// Update contacts table display
 function updateTable() {
   tableBody.innerHTML = '';
-  let contactListSort = contactsList.sort((a, b) => a.name.localeCompare(b.name));
-
-  contactListSort.forEach(contact => {
-    addContactToTable(contact.id, contact.name, contact.tel, contact.email);
-  });
-
+  contactsList.sort((a, b) => a.name.localeCompare(b.name))
+              .forEach(contact => addContactToTable(contact.id, contact.name, contact.tel, contact.email));
   addEditAndDeleteButtonEvents();
 }
 
+// Add contact to table row
 function addContactToTable(id, name, tel, email) {
   const row = document.createElement('tr');
-  
-  const nameCell = document.createElement('td');
-  nameCell.textContent = name;
-  
-  const telCell = document.createElement('td');
-  telCell.textContent = tel;
-  
-  const emailCell = document.createElement('td');
-  emailCell.textContent = email;
-  
-  const optionsCell = document.createElement('td');
-  optionsCell.innerHTML = `
-    <button data-id="${id}" class="edit-btn options-btn" title="Editar contato"><i class="fa-solid fa-pen"></i></button>
-    <button data-id="${id}" class="delete-btn options-btn" title="Excluir contato"><i class="fa-solid fa-trash-can"></i></button>
+  row.innerHTML = `
+    <td>${name}</td>
+    <td>${tel}</td>
+    <td>${email}</td>
+    <td>
+      <button data-id="${id}" class="edit-btn options-btn" title="Editar contato"><i class="fa-solid fa-pen"></i></button>
+      <button data-id="${id}" class="delete-btn options-btn" title="Excluir contato"><i class="fa-solid fa-trash-can"></i></button>
+    </td>
   `;
-  
-  row.appendChild(nameCell);
-  row.appendChild(telCell);
-  row.appendChild(emailCell);
-  row.appendChild(optionsCell);
-  
   tableBody.appendChild(row);
 }
 
+// Update contacts list (add/edit)
 function updateContactsList(id, name, tel, email) {
-  const contact = {
-    id,
-    name,
-    tel,
-    email,
-  };
+  const contact = { id, name, tel, email };
 
   if (contactIdEdit === null) {
-    // Add new contact
     contactsList.push(contact);
   } else {
-    // Edit existing contact
     const index = contactsList.findIndex(contact => contact.id === contactIdEdit);
     contactsList[index] = { id: contactIdEdit, name, tel, email };
     contactIdEdit = null;
   }
 }
 
+// Update contacts count
 function updateTotalContacts() {
   totalContacts.textContent = `${contactsList.length} contatos`;
 }
 
-function clearErrorMessage() {
-  errorMessage.textContent = '';
-}
+// Clear error message and form inputs
+function clearErrorMessage() { errorMessage.textContent = ''; }
+function clearForm() { inputName.value = ''; inputTel.value = ''; inputEmail.value = ''; clearErrorMessage(); }
 
-function clearForm() {
-  inputName.value = '';
-  inputTel.value = '';
-  inputEmail.value = '';
-  clearErrorMessage();
-}
-
+// Add events for edit and delete buttons
 function addEditAndDeleteButtonEvents() {
-  const editBtns = document.querySelectorAll(".edit-btn");
-  const deleteBtns = document.querySelectorAll(".delete-btn");
-  
-  editBtns.forEach(button => {
+  document.querySelectorAll(".edit-btn").forEach(button => {
     button.addEventListener("click", function(e) {
       e.preventDefault();
       contactIdEdit = parseInt(this.getAttribute("data-id"));
       const contact = contactsList.find(contact => contact.id === contactIdEdit);
-      
       inputName.value = contact.name;
       inputTel.value = contact.tel;
       inputEmail.value = contact.email;
-      
       modalAddToggle();
     });
   });
-  
-  deleteBtns.forEach(button => {
+
+  document.querySelectorAll(".delete-btn").forEach(button => {
     button.addEventListener("click", function(e) {
       e.preventDefault();
-      modalDeleteToggle();
       contactIdDelete = parseInt(this.getAttribute("data-id"));
+      modalDeleteToggle();
     });
   });
 }
 
-// --------- event listeners ---------
+// Filter and display contacts based on search
+function filterContacts(term) {
+  const filteredContacts = contactsList.filter(contact =>
+    contact.name.toLowerCase().includes(term.toLowerCase()) ||
+    contact.tel.includes(term) ||
+    contact.email.toLowerCase().includes(term.toLowerCase())
+  );
+  displayFilteredContacts(filteredContacts);
+}
+
+function displayFilteredContacts(filteredContacts) {
+  tableBody.innerHTML = '';
+  filteredContacts.forEach(contact => addContactToTable(contact.id, contact.name, contact.tel, contact.email));
+  addEditAndDeleteButtonEvents();
+}
+
+// --------- Event Listeners ---------
 
 updateTable();
 updateTotalContacts();
 
-closeModalDeleteBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  modalDeleteToggle();
-});
+closeModalDeleteBtn.addEventListener('click', modalDeleteToggle);
 
 addContactBtn.addEventListener('click', (e) => {
   e.preventDefault();
@@ -190,36 +173,38 @@ closeModalAddBtn.addEventListener('click', (e) => {
 
 formAddContacts.addEventListener('submit', function(e) {
   e.preventDefault();
-
   const name = inputName.value;
   const tel = inputTel.value;
   const email = inputEmail.value;
 
   const validationResult = validateForm(name, tel, email);
-  
   if (validationResult !== true) {
     errorMessage.textContent = validationResult;
     return;
   }
-  
+
   updateContactsList(contactIdEdit === null ? idCounter++ : contactIdEdit, name, tel, email);
   updateTable();
   updateTotalContacts();
-
   clearForm();
   modalAddToggle();
 });
 
-// Clear error message when typing in input
-inputName.addEventListener('input', clearErrorMessage);
-inputTel.addEventListener('input', clearErrorMessage);
-inputEmail.addEventListener('input', clearErrorMessage);
-
+// Delete contact on modal confirm
 deleteContactModalBtn.addEventListener('click', (e) => {
   e.preventDefault();
   contactsList = contactsList.filter(contact => contact.id !== contactIdDelete);
-
   modalDeleteToggle();
   updateTable();
   updateTotalContacts();
+});
+
+// Filter contacts on search input
+searchInput.addEventListener('input', (e) => {
+  filterContacts(e.target.value);
+});
+
+// Clear error message on input change
+[inputName, inputTel, inputEmail].forEach(input => {
+  input.addEventListener('input', clearErrorMessage);
 });
