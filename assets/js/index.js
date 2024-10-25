@@ -36,6 +36,7 @@ const totalContacts = document.getElementById('total-contacts');
 
 function modalAddToggle() {
   modalAddContacts.classList.toggle('hide');
+  addContactModalBtn.textContent = contactIdEdit === null ? 'Adicionar' : 'Editar';
 }
 
 function modalDeleteToggle() {
@@ -49,17 +50,17 @@ function validateForm(name, tel, email) {
 
   if (!name) {
     message = "Preencha o nome do contato";
-  } else if (contactsList.some(el => el.name == name && el.id !== contactIdEdit)) {
+  } else if (contactsList.some(el => el.name === name && el.id !== contactIdEdit)) {
     message = "Já existe um contato com esse nome";
   } else if (!tel) {
     message = "Preencha o telefone do contato";
   } else if (tel && !telRegex.test(tel)) {
     message = "O telefone deve ter apenas dígitos numéricos.";
-  } else if (contactsList.some(el => el.tel == tel && el.id !== contactIdEdit)) {
+  } else if (contactsList.some(el => el.tel === tel && el.id !== contactIdEdit)) {
     message = "Já existe um contato com esse número";
   } else if (email && !emailRegex.test(email)) {
     message = "Formato de e-mail inválido.";
-  } else if (email !== '' && contactsList.some(el => el.email == email && el.id !== contactIdEdit)) {
+  } else if (email !== '' && contactsList.some(el => el.email === email && el.id !== contactIdEdit)) {
     message = "Já existe um contato com esse email";
   } else {
     message = true;
@@ -75,11 +76,10 @@ function updateTable() {
     addContactToTable(contact.id, contact.name, contact.tel, contact.email);
   });
 
-  addDeleteButtonEvents();
-  addEditButtonEvents();
+  addEditAndDeleteButtonEvents();
 }
 
-function addContactToTable(id, name, tel, email) {  
+function addContactToTable(id, name, tel, email) {
   const row = document.createElement('tr');
   
   const nameCell = document.createElement('td');
@@ -106,13 +106,20 @@ function addContactToTable(id, name, tel, email) {
 }
 
 function updateContactsList(id, name, tel, email) {
-  const contact = { id, name, tel, email };
+  const contact = {
+    id,
+    name,
+    tel,
+    email,
+  };
 
   if (contactIdEdit === null) {
+    // Add new contact
     contactsList.push(contact);
   } else {
-    const contactIndex = contactsList.findIndex(el => el.id === contactIdEdit);
-    contactsList[contactIndex] = contact;
+    // Edit existing contact
+    const index = contactsList.findIndex(contact => contact.id === contactIdEdit);
+    contactsList[index] = { id: contactIdEdit, name, tel, email };
     contactIdEdit = null;
   }
 }
@@ -132,33 +139,29 @@ function clearForm() {
   clearErrorMessage();
 }
 
-function addDeleteButtonEvents() {
+function addEditAndDeleteButtonEvents() {
+  const editBtns = document.querySelectorAll(".edit-btn");
   const deleteBtns = document.querySelectorAll(".delete-btn");
+  
+  editBtns.forEach(button => {
+    button.addEventListener("click", function(e) {
+      e.preventDefault();
+      contactIdEdit = parseInt(this.getAttribute("data-id"));
+      const contact = contactsList.find(contact => contact.id === contactIdEdit);
+      
+      inputName.value = contact.name;
+      inputTel.value = contact.tel;
+      inputEmail.value = contact.email;
+      
+      modalAddToggle();
+    });
+  });
   
   deleteBtns.forEach(button => {
     button.addEventListener("click", function(e) {
       e.preventDefault();
       modalDeleteToggle();
-
       contactIdDelete = parseInt(this.getAttribute("data-id"));
-    });
-  });
-}
-
-function addEditButtonEvents() {
-  const editBtns = document.querySelectorAll(".edit-btn");
-
-  editBtns.forEach(button => {
-    button.addEventListener("click", function(e) {
-      e.preventDefault();
-      modalAddToggle();
-
-      contactIdEdit = parseInt(this.getAttribute("data-id"));
-      const contact = contactsList.find(c => c.id === contactIdEdit);
-
-      inputName.value = contact.name;
-      inputTel.value = contact.tel;
-      inputEmail.value = contact.email;
     });
   });
 }
@@ -175,15 +178,14 @@ closeModalDeleteBtn.addEventListener('click', (e) => {
 
 addContactBtn.addEventListener('click', (e) => {
   e.preventDefault();
-  modalAddToggle();
   contactIdEdit = null;
   clearForm();
+  modalAddToggle();
 });
 
 closeModalAddBtn.addEventListener('click', (e) => {
   e.preventDefault();
   modalAddToggle();
-  clearForm();
 });
 
 formAddContacts.addEventListener('submit', function(e) {
@@ -200,7 +202,7 @@ formAddContacts.addEventListener('submit', function(e) {
     return;
   }
   
-  updateContactsList(contactIdEdit !== null ? contactIdEdit : idCounter++, name, tel, email);
+  updateContactsList(contactIdEdit === null ? idCounter++ : contactIdEdit, name, tel, email);
   updateTable();
   updateTotalContacts();
 
@@ -208,7 +210,7 @@ formAddContacts.addEventListener('submit', function(e) {
   modalAddToggle();
 });
 
-// clear error message when typing in input
+// Clear error message when typing in input
 inputName.addEventListener('input', clearErrorMessage);
 inputTel.addEventListener('input', clearErrorMessage);
 inputEmail.addEventListener('input', clearErrorMessage);
