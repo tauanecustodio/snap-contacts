@@ -1,25 +1,31 @@
 // --------- variables declaration ---------
 
-const contactsList = [
-  { name: "Polícia", tel: "190", email: "" },
-  { name: "Bombeiros", tel: "193", email: "" },
-  { name: "Ambulância", tel: "192", email: "" }
+let contactIdDelete = null;
+let idCounter = 3;
+let contactsList = [
+  { id: 0, name: "Polícia", tel: "190", email: "" },
+  { id: 1, name: "Bombeiros", tel: "193", email: "" },
+  { id: 2, name: "Ambulância", tel: "192", email: "" }
 ];
 
 // main buttons
 const addContactBtn = document.getElementById('add-btn');
 
 // modal
-const modalAddContacts = document.getElementById('modal__add-contacts');
-const closeModalBtn = document.querySelector('.modal__cancel');
+const modalDeleteContacts = document.getElementById('modal-delete-contacts');
+const closeModalDeleteBtn = document.querySelector('.modal__cancel-delete');
+const deleteContactModalBtn = document.querySelector('.modal__delete');
+
+const modalAddContacts = document.getElementById('modal-add-contacts');
+const closeModalAddBtn = document.querySelector('.modal__cancel-add');
 const addContactModalBtn = document.querySelector('.modal__add');
 
 // form
 const formAddContacts = document.getElementById('form-add-contacts');
-const inputName = document.getElementById('name-input');
-const inputTel = document.getElementById('tel-input');
-const inputEmail = document.getElementById('email-input');
 const errorMessage = document.getElementById('error-message');
+const [inputName, inputTel, inputEmail] = [
+  'name-input', 'tel-input', 'email-input'
+].map(id => document.getElementById(id));
 
 // table
 const tableBody = document.getElementById('contacts-table-body');
@@ -27,8 +33,12 @@ const totalContacts = document.getElementById('total-contacts');
 
 // --------- function declarations ---------
 
-function modalToggle() {
+function modalAddToggle() {
   modalAddContacts.classList.toggle('hide');
+}
+
+function modalDeleteToggle() {
+  modalDeleteContacts.classList.toggle('hide');
 }
 
 function validateForm(name, tel, email) {
@@ -57,15 +67,17 @@ function validateForm(name, tel, email) {
 }
 
 function updateTable() {
-  tableBody.innerHTML= '';
+  tableBody.innerHTML = '';
   let contactListSort = contactsList.sort((a, b) => a.name.localeCompare(b.name));
 
   contactListSort.forEach(contact => {
-    addContactToTable(contact.name, contact.tel, contact.email);
+    addContactToTable(contact.id, contact.name, contact.tel, contact.email);
   });
+
+  addDeleteButtonEvents();
 }
 
-function addContactToTable(name, tel, email) {  
+function addContactToTable(id, name, tel, email) {  
   const row = document.createElement('tr');
   
   const nameCell = document.createElement('td');
@@ -77,15 +89,20 @@ function addContactToTable(name, tel, email) {
   const emailCell = document.createElement('td');
   emailCell.textContent = email;
   
+  const optionsCell = document.createElement('td');
+  optionsCell.innerHTML = `<button data-id="${id}" class="delete-btn" title="Excluir contato"><i class="fa-solid fa-trash-can"></i></button>`;
+  
   row.appendChild(nameCell);
   row.appendChild(telCell);
   row.appendChild(emailCell);
+  row.appendChild(optionsCell);
   
   tableBody.appendChild(row);
 }
 
-function updateContactsList(name, tel, email) {
+function updateContactsList(id, name, tel, email) {
   const contact = {
+    id,
     name,
     tel,
     email,
@@ -109,24 +126,43 @@ function clearForm() {
   clearErrorMessage();
 }
 
+function addDeleteButtonEvents() {
+  const deleteBtns = document.querySelectorAll(".delete-btn");
+  
+  deleteBtns.forEach(button => {
+    button.addEventListener("click", function(e) {
+      e.preventDefault();
+      modalDeleteToggle();
+
+      contactIdDelete = parseInt(this.getAttribute("data-id"));
+
+    });
+  });
+}
+
 // --------- event listeners ---------
 
 updateTable();
 updateTotalContacts();
 
+closeModalDeleteBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  modalDeleteToggle();
+});
+
 addContactBtn.addEventListener('click', (e) => {
   e.preventDefault();
-  modalToggle();
-})
+  modalAddToggle();
+});
 
-closeModalBtn.addEventListener('click', (e) => {
+closeModalAddBtn.addEventListener('click', (e) => {
   e.preventDefault();
-  modalToggle();
-})
+  modalAddToggle();
+});
 
-formAddContacts.addEventListener('submit',  function(e) {
+formAddContacts.addEventListener('submit', function(e) {
   e.preventDefault();
-  
+
   const name = inputName.value;
   const tel = inputTel.value;
   const email = inputEmail.value;
@@ -138,16 +174,25 @@ formAddContacts.addEventListener('submit',  function(e) {
     return;
   }
   
-  updateContactsList(name, tel, email);
+  updateContactsList(idCounter++, name, tel, email);
   updateTable();
   updateTotalContacts();
 
   clearForm();
-
-  modalToggle();
-})
+  modalAddToggle();
+});
 
 // clear error message when typing in input
-inputName.addEventListener('input', clearErrorMessage)
+inputName.addEventListener('input', clearErrorMessage);
 inputTel.addEventListener('input', clearErrorMessage);
 inputEmail.addEventListener('input', clearErrorMessage);
+
+
+deleteContactModalBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  contactsList = contactsList.filter(contact => contact.id !== contactIdDelete);
+
+  modalDeleteToggle();
+  updateTable();
+  updateTotalContacts();
+})

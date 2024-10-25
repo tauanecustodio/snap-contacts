@@ -53,6 +53,7 @@
                 <th>Nome</th>
                 <th>Telefone</th>
                 <th>Email</th>
+                <th>Opções</th>
               </tr>
             </thead>
 
@@ -63,6 +64,7 @@
             <tfoot class="contacts-table__foot">
               <tr>
                 <td>Total</td>
+                <td></td>
                 <td></td>
                 <td id="total-contacts">0 contatos</td>
               </tr>
@@ -91,23 +93,34 @@
     <!-- modal -->
     <div class="modals">
 
-      <div class="modal__container hide" id="modal__add-contacts">
-        <div class="modal__add-contacts">
+      <div class="modal__container hide" id="modal-add-contacts">
+        <div class="modal__content">
           <form action="#" id="form-add-contacts">
             <input type="text" class="modal__input" placeholder="Nome" id="name-input">
             <input type="tel" class="modal__input" placeholder="Telefone" id="tel-input">
             <input type="email" class="modal__input" placeholder="Email" id="email-input">
 
-            <div class="form__error" id="error-message"></div>
+            <div class="danger" id="error-message"></div>
     
             <div class="modal__buttons">
-              <button class="modal__btn modal__cancel primary-btn" >Cancelar</button>
+              <button class="modal__btn modal__cancel-add primary-btn" >Cancelar</button>
               <button class="modal__btn modal__add secondary-btn" type="submit">Adicionar</button>
             </div>
           </form>
         </div>
+        
       </div>
 
+      <div class="modal__container hide" id="modal-delete-contacts">
+        <div class="modal__content">
+          <p>Tem certeza que deseja excluir esse contato?</p>
+          <p class="danger">Essa ação não poderá ser desfeita</p>
+    
+            <div class="modal__buttons">
+              <button class="modal__btn modal__cancel-delete primary-btn" >Cancelar</button>
+              <button class="modal__btn modal__delete secondary-btn" type="submit">Excluir</button>
+            </div>
+        </div>
     </div>
     <script src="./assets/js/index.js"></script>
   </body>

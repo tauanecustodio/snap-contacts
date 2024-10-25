@@ -181,11 +181,14 @@ body {
     background-color: var(--modal-background);
 }
 
-.modal__add-contacts {
+.modal__content {
     background-color: var(--light-background);
     padding: 1rem;
     border-radius: 4px;
     min-width: 360px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 #form-add-contacts {
@@ -254,8 +257,14 @@ body {
     display: none;
 }
 
-.form__error {
+.danger {
     color: red;
     font-size: 0.8rem;
     text-align: center;
+}
+
+.delete-btn {
+    color: var(--primary-color);
+    border: none;
+    background: transparent;
 }
