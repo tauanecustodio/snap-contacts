@@ -263,8 +263,9 @@ body {
     text-align: center;
 }
 
-.delete-btn {
+.options-btn {
     color: var(--primary-color);
     border: none;
     background: transparent;
+    padding: 0 0.3rem;
 }
