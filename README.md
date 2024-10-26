@@ -1,5 +1,5 @@
 # SnapContacts
-SnapContacts é um site de gerencimento de contatos que permite aos usuários adicionar e visualizar seus contatos.
+SnapContacts é um site de gerencimento de contatos que permite aos usuários adicionar, visualizar, excluir e pesquisar seus contatos.
 
 Esse projeto faz parte dos projetos construídos no curso "Desenvolvedor FullStack Python"
 
@@ -37,12 +37,8 @@ Esse projeto faz parte dos projetos construídos no curso "Desenvolvedor FullSta
 - Contagem total de contatos
 - Ordenação dos contatos em ordem alfabética
 - Responsivo e fácil de usar
-
-## Funcionalidades futuras
-
-- Excluir e editar contatos
-- Pesquisa de contatos
-- Favoritar os contatos e filtrar por favoritos
+- Excluir contatos
+- Pesquisar contatos
 
 ## Instalação
 
