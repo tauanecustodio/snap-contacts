@@ -10,12 +10,12 @@ Esse projeto faz parte dos projetos construídos no curso "Desenvolvedor FullSta
   - [Screenshot e deploy](#screenshot-e-deploy)
   - [Tecnologias Utilizadas](#tecnologias-utilizadas)
   - [Funcionalidades](#funcionalidades)
-  - [Funcionalidades futuras](#funcionalidades-futuras)
   - [Instalação](#instalação)
   - [Contribuição](#contribuição)
   - [Contato](#contato)
 
 ## Screenshot e deploy
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-View%20Site-brightgreen)](https://snap-contacts.vercel.app/)
 
 <img src="./screenshot/iphone-13-pro-127.0.0.1.png" alt="screenshot do projeto em um iphone" width="90" />
 <img src="./screenshot/ipad-pro-11-127.0.0.1.png" alt="screenshot do projeto em um ipad" width="150" />
@@ -38,6 +38,7 @@ Esse projeto faz parte dos projetos construídos no curso "Desenvolvedor FullSta
 - Ordenação dos contatos em ordem alfabética
 - Responsivo e fácil de usar
 - Excluir contatos
+- Editar contatos (todos os campos)
 - Pesquisar contatos
 
 ## Instalação
