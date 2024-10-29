@@ -169,6 +169,7 @@ addContactBtn.addEventListener('click', (e) => {
 closeModalAddBtn.addEventListener('click', (e) => {
   e.preventDefault();
   modalAddToggle();
+  clearForm();
 });
 
 formAddContacts.addEventListener('submit', function(e) {
